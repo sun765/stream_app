@@ -47,7 +47,6 @@ export const fetchStream = (id)=>{
     }
 }
 export const createStream =  formValues =>{
-    console.log(formValues);
     return async (dispatch, getState)=>{
         const authorID = getState().auth.currentUserId;
         const response = await stream.post('/streams',{...formValues, authorID});
@@ -74,9 +73,12 @@ export const editStream = (id, formValues) =>{
 
 export const deleteStream = (id) =>{
     return async(dispatch)=>{
-        await stream.delete(`/streams/:${id}`);
+        await stream.delete(`/streams/${id}`);
         dispatch({
-            type:DELETE_STREAM
-        })
+            type:DELETE_STREAM,
+            payload:id
+        });
+
+        history.push('/');
     }
 }
